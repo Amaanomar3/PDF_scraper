@@ -4,6 +4,7 @@ import fitz
 import pytesseract
 
 
+
 """convert PDF to image"""
 
 def PDF_to_img(input_path, output_path):
@@ -56,7 +57,7 @@ doc_in = 'doc_in'
 img_out = 'img_out'
 zones = [
     (105,555,280,584),
-    (590,550,770,580),
+    (590,550,900,580),
     (105,582,280,608),
     (588,585,724,606)
 ]
