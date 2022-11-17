@@ -2,7 +2,9 @@ from PIL import ImageDraw, Image
 import glob
 import fitz
 import pytesseract
+from flask import Flask
 
+app=Flask()
 
 
 """convert PDF to image"""
@@ -61,7 +63,7 @@ zones = [
     (105,582,280,608),
     (588,585,724,606)
 ]
-
+app.route('/trigger')
 PDF_to_img(doc_in,img_out)
 check_zones(img_out,zones)
 conf = input('Would you like to proceed: (Y/N): ')
