@@ -1,7 +1,6 @@
 from PIL import ImageDraw, Image
 import glob
 import fitz
-import sys
 import pytesseract
 
 
