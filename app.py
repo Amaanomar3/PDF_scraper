@@ -2,9 +2,13 @@ from PIL import ImageDraw, Image
 import glob
 import fitz
 import pytesseract
-from flask import Flask
+from flask import Flask, render_template
+import csv
+import os
+import cgi 
+import cgitb ; cgitb.enable() 
 
-
+server = Flask(__name__)
 
 
 """convert PDF to image"""
@@ -63,17 +67,34 @@ zones = [
     (105,582,280,608),
     (588,585,724,606)
 ]
+@server.route('/')
+def serve_html():
+    try:
+        return render_template('index.html')
+    except Exception as e:
+        return str(e) 
 
-PDF_to_img(doc_in,img_out)
-check_zones(img_out,zones)
-conf = input('Would you like to proceed: (Y/N): ')
-if conf.lower() == "y":
+@server.route('/upload' , methods=('POST',))
+def add_files():
+    form = cgi.FieldStorage()
+    print (form)
+    fileitem = form['filename']
+    if fileitem.filename:
+        fn = os.path.basename(fileitem.filename)
+        open(fn, 'wb').write(fileitem.file.read())
+        
+        
+
+
+
+@server.route('/extract-to-csv', methods= ('POST',))
+def extract():
+    PDF_to_img(doc_in,img_out)
+    check_zones(img_out,zones)
     extract = extract_info(img_out,zones)
     for field in extract:
-        print(field)
+       print(field)
 
-else:
-    print("closing...")
         
     
 
